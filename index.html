@@ -1,197 +1,581 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>ساحة الظل</title>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;800&display=swap" rel="stylesheet">
-<style>
-:root{--bg:#0d0a18;--fg:#fff1e6;--dim:#b9a6c9;--hot:#ff6b3d;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d0a18}}
-:root[data-theme="dark"]{--bg:#0d0a18}
-html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
-body{height:100%;margin:0;background:var(--bg);color:var(--fg);overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none;font-family:Tajawal,system-ui,sans-serif}
-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
-#hud{position:absolute;top:calc(env(safe-area-inset-top,0px) + 8px);left:10px;right:10px;display:flex;justify-content:space-between;align-items:flex-start;gap:8px;pointer-events:none;font-weight:800}
-.pl{flex:1;max-width:44vw}.pl.r{text-align:right}
-.nm{font-size:16px;margin-bottom:3px}
-.bar{height:13px;border-radius:7px;background:#ffffff22;overflow:hidden;margin-bottom:4px;border:1px solid #ffffff22}
-.bar.sm{height:7px}.bar i{display:block;height:100%;width:100%}
-#h1,#m1{transform-origin:left}#h2,#m2{transform-origin:right}
-#h1,#h2{background:linear-gradient(90deg,#ffd54a,#ff4d6d)}#m1,#m2{background:linear-gradient(90deg,#7df3ff,#8a6bff)}
-.dots{display:flex;gap:5px}.pl.r .dots{justify-content:flex-end}.dt{width:11px;height:11px;border-radius:50%;border:2px solid #fff8}.dt.on{background:#ffd54a;border-color:#ffd54a}
-#tm{font-size:26px;min-width:44px;text-align:center}
-#bn{position:absolute;top:30%;left:0;right:0;text-align:center;font-size:52px;font-weight:800;color:#ffd9a0;opacity:0;transition:opacity .4s;pointer-events:none;text-shadow:0 0 26px #ff6b3d99}
-.btn{position:absolute;border-radius:50%;border:2px solid #fff9;background:#ffffff1f;color:#fff;font:800 15px Tajawal,system-ui,sans-serif;display:flex;align-items:center;justify-content:center;touch-action:none;width:54px;height:54px}
-:root{--b:calc(env(safe-area-inset-bottom,0px) + 18px)}
-#lf{left:12px;bottom:var(--b)}#rt{left:76px;bottom:var(--b)}#jp{left:44px;bottom:calc(var(--b) + 64px)}#bk{left:112px;bottom:calc(var(--b) + 64px);font-size:13px}
-#at{right:14px;bottom:var(--b);width:80px;height:80px;border-color:#ff6b3d;color:#ff6b3d;background:#ff6b3d22;font-size:18px}
-#s1{right:104px;bottom:var(--b);border-color:#7df3ff;color:#7df3ff}#s2{right:92px;bottom:calc(var(--b) + 64px);border-color:#7df3ff;color:#7df3ff}#ul{right:20px;bottom:calc(var(--b) + 92px);border-color:#ffd54a;color:#ffd54a}
-#ov{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:18px;background:#0d0a18e6;overflow:auto;touch-action:pan-y}
-#ov h1{font-size:54px;font-weight:800;margin:0 0 8px;color:var(--hot);text-shadow:0 0 30px #ff6b3d88}
-#ov h2{margin:0 0 12px;font-size:26px}
-#ov p{margin:6px 0;font-size:18px;line-height:1.7;max-width:400px}#ov .d{color:var(--dim);font-size:14px}
-.gb{margin:14px 6px 0;font:800 19px Tajawal,system-ui,sans-serif;padding:11px 34px;border-radius:40px;border:2px solid var(--hot);background:transparent;color:var(--hot);cursor:pointer}
-.gb:hover,.gb:focus-visible{background:var(--hot);color:#fff;outline:none}
-.gr{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;max-width:520px}
-.cd{border:2px solid var(--c);border-radius:14px;padding:10px;background:#ffffff0d;text-align:right;cursor:pointer}.cd:hover{background:#ffffff1a}
-.cd h3{margin:0;color:var(--c);font-size:22px}.cd small{color:var(--dim)}.cd ul{margin:6px 0 0;padding:0;list-style:none;font-size:13px;line-height:1.7}
-.hide{display:none!important}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ساحة التقنيات: صراع الأسطورة</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-user-select: none;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: #0d0d1a;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+        #game-container {
+            width: 100vw;
+            height: 100vh;
+            max-width: 850px;
+            max-height: 480px;
+            background: linear-gradient(to bottom, #111122, #1a1a3a, #0f2b48);
+            position: relative;
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.25);
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* HUD UI */
+        .hud {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 18px;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            z-index: 10;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .health-bar-container {
+            width: 40%;
+        }
+        .character-name {
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 4px;
+            display: flex;
+            justify-content: space-between;
+            color: #e0e0e0;
+        }
+        .bar-bg {
+            width: 100%;
+            height: 14px;
+            background: #222;
+            border-radius: 7px;
+            overflow: hidden;
+            border: 1px solid #444;
+            position: relative;
+        }
+        .hp-fill {
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(90deg, #ff3366, #ff9900);
+            transition: width 0.2s ease;
+            box-shadow: 0 0 8px #ff3366;
+        }
+        .energy-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #00d2ff, #0072ff);
+            transition: width 0.1s linear;
+            box-shadow: 0 0 8px #00d2ff;
+        }
+        .stage-badge {
+            background: rgba(255, 204, 0, 0.15);
+            border: 1px solid #ffcc00;
+            color: #ffcc00;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+            text-shadow: 0 0 5px rgba(255, 204, 0, 0.5);
+        }
+        
+        /* Battlefield */
+        #arena {
+            flex-grow: 1;
+            position: relative;
+            overflow: hidden;
+            background: radial-gradient(circle at center, rgba(30,30,60,0.4) 0%, rgba(10,10,20,0.8) 100%);
+        }
+        .character {
+            position: absolute;
+            bottom: 35px;
+            width: 65px;
+            height: 95px;
+            transition: transform 0.1s;
+        }
+        #player {
+            left: 60px;
+        }
+        #enemy {
+            right: 60px;
+            transform: scaleX(-1);
+        }
+        
+        /* Character Visuals */
+        .char-body {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            border-radius: 10px 10px 2px 2px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 30px;
+        }
+        .player-visual {
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
+            box-shadow: 0 0 15px rgba(0, 198, 255, 0.6);
+            border: 2px solid #80dfff;
+        }
+        .enemy-visual {
+            background: linear-gradient(135deg, #ff0055, #990033);
+            box-shadow: 0 0 15px rgba(255, 0, 85, 0.6);
+            border: 2px solid #ff80ab;
+        }
+
+        .shield-aura {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border-radius: 50%;
+            border: 3px solid #00f0ff;
+            box-shadow: 0 0 20px #00f0ff, inset 0 0 15px #00f0ff;
+            animation: rotateShield 2s linear infinite;
+            display: none;
+        }
+        @keyframes rotateShield {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Projectiles */
+        .projectile {
+            position: absolute;
+            bottom: 65px;
+            border-radius: 50%;
+            transform: translateY(50%);
+            z-index: 5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+        }
+
+        /* Controls Deck */
+        .controls-deck {
+            height: 110px;
+            background: rgba(10, 10, 22, 0.95);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 8px 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 10;
+            gap: 8px;
+        }
+        .tech-card {
+            flex: 1;
+            height: 90px;
+            background: linear-gradient(145deg, #18182e, #121224);
+            border: 1px solid #333355;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 4px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+        .tech-card.active {
+            border-color: #00f0ff;
+            box-shadow: 0 0 12px rgba(0, 240, 255, 0.3);
+            background: linear-gradient(145deg, #1e1e3f, #151530);
+        }
+        .tech-card.active:active {
+            transform: scale(0.95);
+        }
+        .tech-card.disabled {
+            opacity: 0.35;
+            filter: grayscale(0.8);
+            cursor: not-allowed;
+        }
+        .tech-icon {
+            font-size: 26px;
+            margin-top: 2px;
+        }
+        .tech-name {
+            font-size: 11px;
+            font-weight: bold;
+            text-align: center;
+            color: #ffffff;
+        }
+        .tech-cost {
+            font-size: 10px;
+            color: #00d2ff;
+            font-weight: bold;
+            background: rgba(0, 210, 255, 0.1);
+            padding: 2px 6px;
+            border-radius: 10px;
+        }
+
+        /* Overlay UI Screens */
+        .screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 20, 0.95);
+            backdrop-filter: blur(8px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 20;
+            text-align: center;
+            padding: 20px;
+        }
+        .btn {
+            background: linear-gradient(45deg, #00c6ff, #0072ff);
+            border: none;
+            color: white;
+            padding: 14px 36px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(0, 198, 255, 0.4);
+            margin-top: 20px;
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .btn:active {
+            transform: scale(0.95);
+        }
+        
+        /* Clash System Overlay */
+        .clash-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 5, 12, 0.85);
+            backdrop-filter: blur(4px);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 15;
+        }
+        .clash-meter-bg {
+            width: 70%;
+            height: 20px;
+            background: #222;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 2px solid #fff;
+            margin: 20px 0;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        }
+        .clash-meter-fill {
+            height: 100%;
+            width: 50%;
+            background: linear-gradient(90deg, #ff0055, #ffcc00, #00f0ff);
+            transition: width 0.05s ease-out;
+        }
+        .tap-btn {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #ff0055, #880022);
+            border: 4px solid #ffffff;
+            color: white;
+            font-size: 22px;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 25px #ff0055;
+            cursor: pointer;
+            user-select: none;
+            touch-action: manipulation;
+        }
+        .tap-btn:active {
+            transform: scale(0.92);
+            box-shadow: 0 0 35px #ff0055;
+        }
+    </style>
 </head>
 <body>
-<canvas id="c"></canvas>
-<div id="hud" dir="ltr"><div class="pl"><div class="nm" id="n1"></div><div class="bar"><i id="h1"></i></div><div class="bar sm"><i id="m1"></i></div><div class="dots" id="d1"></div></div><div id="tm">60</div><div class="pl r"><div class="nm" id="n2"></div><div class="bar"><i id="h2"></i></div><div class="bar sm"><i id="m2"></i></div><div class="dots" id="d2"></div></div></div>
-<div id="bn"></div>
-<div class="btn" id="lf">◀</div><div class="btn" id="rt">▶</div><div class="btn" id="jp">▲</div><div class="btn" id="bk">درع</div>
-<div class="btn" id="at">اضرب</div><div class="btn" id="s1">١</div><div class="btn" id="s2">٢</div><div class="btn" id="ul">★</div>
-<div id="ov"></div>
-<script>
-const $=i=>document.getElementById(i),c=$('c'),x=c.getContext('2d');
-const ar=n=>String(n).replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]),cl=(v,a,b)=>Math.max(a,Math.min(b,v));
-const CH=[
-{n:'لَهَب',el:'النار',col:'#3a1a1a',acc:'#ff5a1f',hp:100,sp:235,T:[['١','كرة نار'],['٢','اندفاع اللهب'],['★','عنقاء الجحيم']],bg:['#2a0a12','#8a2a1a','#ff9a3d','#3a1018','#1a0608'],am:'#ff8a3d',v:[12,-45]},
-{n:'صاعِقة',el:'البرق',col:'#1b2440',acc:'#8fe8ff',hp:90,sp:262,T:[['١','ضربة صاعقة'],['٢','اندفاع الرعد'],['★','عاصفة البرق']],bg:['#05081a','#1b2a5a','#5a7ac0','#12182e','#080b18'],am:'#bfe6ff',v:[-70,460]},
-{n:'ظِلال',el:'الظل',col:'#1a1426',acc:'#b66bff',hp:95,sp:245,T:[['١','نسخة الظل'],['٢','العبور الخلفي'],['★','سجن الظلال']],bg:['#0a0516','#2a1450','#7a3aa0','#1a0d2e','#0a0614'],am:'#c08aff',v:[6,-12]},
-{n:'عاصِفة',el:'الريح',col:'#183a34',acc:'#6dffb0',hp:105,sp:240,T:[['١','شفرات الريح'],['٢','هبّة الريح'],['★','إعصار القطع']],bg:['#0a2a3a','#2a8a8a','#c8f0c0','#1d4a4a','#0a2a2a'],am:'#e0ffe8',v:[-170,25]}];
-let W,H,S,GY,bg,AR=0;
-function rs(){const D=window.devicePixelRatio||1;W=c.clientWidth;H=c.clientHeight;c.width=W*D;c.height=H*D;x.setTransform(D,0,0,D,0,0);S=cl(Math.min(H/520,W/700),.5,1.2);GY=H*.86;mkbg(AR)}
-function mkbg(a){const d=CH[a].bg;bg=document.createElement('canvas');bg.width=W;bg.height=H;const b=bg.getContext('2d'),fy=H*.74;
-  let g=b.createLinearGradient(0,0,0,fy);g.addColorStop(0,d[0]);g.addColorStop(.55,d[1]);g.addColorStop(1,d[2]);b.fillStyle=g;b.fillRect(0,0,W,H);
-  const mx=W*(.25+.5*(a%2)),my=H*.2,mr=44*S;g=b.createRadialGradient(mx,my,mr*.4,mx,my,mr*3);g.addColorStop(0,'rgba(255,240,210,.45)');g.addColorStop(1,'rgba(255,240,210,0)');b.fillStyle=g;b.fillRect(0,0,W,H);b.fillStyle='#fff3dc';b.beginPath();b.arc(mx,my,mr,0,6.3);b.fill();
-  [[.55,.3,0],[1,.18,2]].forEach(([al,h,ph])=>{b.globalAlpha=al;b.fillStyle=d[3];b.beginPath();b.moveTo(0,fy);for(let i=0;i<=W;i+=8)b.lineTo(i,fy-H*h*(.45+.35*Math.sin(i*.006+ph+a)+.2*Math.sin(i*.019+ph*2)));b.lineTo(W,fy);b.fill()});b.globalAlpha=1;
-  if(a==0){b.fillStyle=d[4];b.beginPath();b.moveTo(W*.5-170*S,fy);b.lineTo(W*.5-30*S,fy-170*S);b.lineTo(W*.5+30*S,fy-170*S);b.lineTo(W*.5+170*S,fy);b.fill();g=b.createRadialGradient(W*.5,fy-170*S,0,W*.5,fy-170*S,70*S);g.addColorStop(0,'rgba(255,150,50,.9)');g.addColorStop(1,'rgba(255,90,30,0)');b.fillStyle=g;b.fillRect(W*.5-90*S,fy-250*S,180*S,160*S)}
-  if(a==1||a==3){b.fillStyle=a==1?'rgba(10,14,30,.55)':'rgba(255,255,255,.25)';for(let i=0;i<7;i++){b.beginPath();b.ellipse((i*.17+.05)*W,H*(.1+.07*(i%3)),90*S,24*S,0,0,6.3);b.fill()}}
-  if(a==2){b.fillStyle=d[4];for(let i=0;i<W;i+=34*S){const h=(60+(Math.sin(i*.37)*.5+.5)*90)*S;b.beginPath();b.moveTo(i,fy);b.lineTo(i+17*S,fy-h);b.lineTo(i+34*S,fy);b.fill()}}
-  g=b.createLinearGradient(0,fy,0,H);g.addColorStop(0,d[3]);g.addColorStop(1,d[4]);b.fillStyle=g;b.fillRect(0,fy,W,H-fy);b.strokeStyle='#ffffff14';for(let i=1;i<5;i++){b.beginPath();b.moveTo(0,fy+(H-fy)*i/5);b.lineTo(W,fy+(H-fy)*i/5);b.stroke()}
-  g=b.createLinearGradient(0,fy-8,0,fy+24);g.addColorStop(0,d[2]+'88');g.addColorStop(1,d[2]+'00');b.fillStyle=g;b.fillRect(0,fy-8,W,32)}
-addEventListener('resize',rs);
-let st='menu',F1,F2,PR=[],Z=[],Q=[],ps=[],t=0,tm=60,it=0,fb=0,kot=0,hs=0,slow=0,shake=0,flash=0,fcol='#fff',wins=[0,0],rnd=1,ME=0,LAD=[],li=0,AC=null;
-const keys={},TB={l:0,r:0,bk:0},amb=Array.from({length:34},()=>({x:Math.random(),y:Math.random(),s:Math.random()*.7+.3}));
-function beep(f,d=.1,v=.05,ty='sawtooth'){try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain();o.type=ty;o.frequency.setValueAtTime(f,AC.currentTime);o.frequency.exponentialRampToValueAtTime(f*.5,AC.currentTime+d);g.gain.setValueAtTime(v,AC.currentTime);g.gain.exponentialRampToValueAtTime(.0001,AC.currentTime+d);o.connect(g);g.connect(AC.destination);o.start();o.stop(AC.currentTime+d)}catch(e){}}
-function burst(px,py,col,n,sp=220){for(let i=0;i<n;i++){const a=Math.random()*6.28,s=40+Math.random()*sp;ps.push({x:px,y:py,vx:Math.cos(a)*s,vy:Math.sin(a)*s,life:.25+Math.random()*.4,col})}}
-function banner(s){const b=$('bn');b.textContent=s;b.style.opacity=1;setTimeout(()=>b.style.opacity=0,1100)}
-function mkF(ci,side,lvl){const d=CH[ci];return{ci,side,x:W*(side?.7:.3),y:GY,vy:0,f:side?-1:1,hp:d.hp,mhp:d.hp,mt:0,ph:0,mv:0,at:-1,act:null,hu:0,kx:0,fl:0,bl:0,c1:0,c2:0,cb:0,cw:0,lvl,sk:d,dead:0,bound:0,ai:{t:.5,l:0,r:0,bk:0,jp:0}}}
-const q=(t,fn)=>Q.push({t,fn}),puff=F=>burst(F.x,F.y-40*S,'#ddd',14,140);
-function pj(F,o){PR.push(Object.assign({x:F.x+F.f*30*S,y:F.y-55*S,vx:0,r:20*S,dmg:8,kb:300,life:2,own:F,stun:.3,hit:0,mt:0},o))}
-function zap(F,px,dl,dmg){Z.push({x:cl(px,30,W-30),t:dl,m:dl,dmg,own:F,fired:0,v:0})}
-const SK=[
-{K:{cd:1.6,dur:.4,at:.45,fn:F=>pj(F,{vx:F.f*440*S,r:22*S,dmg:10,kb:320,life:2.2,ty:'fire'})},L:{cd:3,dur:.3,dv:760,dmg:12,kb:480},I:{dur:.95,at:.5,fn:F=>pj(F,{vx:F.f*350*S,r:62*S,dmg:28,kb:850,life:3,ty:'fire',pierce:1,y:F.y-70*S,stun:.6})}},
-{K:{cd:1.8,dur:.4,at:.4,fn:(F,O)=>zap(F,O.x,.55,13)},L:{cd:2.4,dur:.22,dv:1250,dmg:9,kb:380},I:{dur:1.3,at:.2,fn:(F,O)=>[-130,0,130].forEach((o,i)=>zap(F,O.x+o*S,.45+i*.3,10))}},
-{K:{cd:1.8,dur:.38,at:.4,fn:F=>pj(F,{vx:F.f*560*S,r:24*S,dmg:9,kb:350,life:1.1,ty:'clone'})},
- L:{cd:3,dur:.5,at:.15,fn:(F,O)=>{puff(F);const sd=F.x<O.x?1:-1;F.x=cl(O.x+sd*70*S,40*S,W-40*S);F.f=-sd;puff(F);q(.18,()=>{if(Math.abs(O.x-F.x)<95*S)hurt(O,F,11,420,.4,0,0)})}},
- I:{dur:1.3,at:.1,fn:(F,O)=>{O.hu=1.3;O.bound=1.3;O.act=null;O.at=-1;F.x=cl(O.x-F.f*80*S,40*S,W-40*S);puff(F);q(.6,()=>{puff(O);hurt(O,F,24,700,.6,1,380)})}}},
-{K:{cd:1.7,dur:.4,at:.35,fn:F=>{const b=()=>pj(F,{x:F.x+F.f*30*S,vx:F.f*680*S,r:18*S,dmg:7,kb:250,life:1.3,ty:'blade'});b();q(.22,()=>{F.x+=0;pj(F,{vx:F.f*680*S,r:18*S,dmg:7,kb:250,life:1.3,ty:'blade'})})}},
- L:{cd:3,dur:.35,at:.4,fn:(F,O)=>{ps.push({ring:1,x:F.x,y:F.y-40*S,life:.4,col:'#6dffb0'});burst(F.x,F.y-40*S,'#e0ffe8',20,300);if(Math.abs(O.x-F.x)<170*S&&Math.abs(O.y-F.y)<120*S)hurt(O,F,5,720,.4,0,0)}},
- I:{dur:1,at:.45,fn:F=>pj(F,{vx:F.f*250*S,r:64*S,dmg:4,kb:160,life:2.2,ty:'tor',mh:.16,mt:0,y:F.y-65*S,stun:.25})}}];
-const oth=F=>F===F1?F2:F1;
-function hurt(O,F,dmg,kb,stun,ig,up){if(st!=='fight'||O.dead)return;let d=dmg;const sg=Math.sign(O.x-F.x)||1;
-  if(O.bl&&!ig){d=dmg*.15;O.kx=sg*kb*.25*S;burst(O.x-sg*20*S,O.y-50*S,'#9fd8ff',6);beep(420,.05,.04,'square')}
-  else{O.hu=stun;O.kx=sg*kb*S;if(up)O.vy=-up*S;O.act=null;O.at=-1;O.fl=.1;O.cw=0;O.bound=Math.min(O.bound,0);hs=Math.min(.12,.03+dmg*.004);shake=Math.max(shake,Math.min(1,dmg/20));burst(O.x,O.y-50*S,'#ffe2b0',9);beep(150+Math.random()*80,.1,.08)}
-  O.hp-=d;F.mt=Math.min(100,F.mt+dmg*.9);O.mt=Math.min(100,O.mt+dmg*.6);if(O.hp<=0){O.hp=0;ko(O)}}
-function ko(O){if(st!=='fight')return;st='ko';kot=2.5;slow=.9;O.dead=1;wins[O===F1?1:0]++;banner('K.O.');shake=1.3;flash=.5;fcol='#fff';beep(70,.6,.1)}
-function melee(F,O,cb){const r=(cb==2?100:82)*S,dx=(O.x-F.x)*F.f;if(dx>-14*S&&dx<r&&Math.abs(O.y-F.y)<70*S)hurt(O,F,[5,5,9][cb],[200,200,520][cb],[.25,.25,.5][cb],0,cb==2?320:0)}
-function tryAct(F,O,k){if(st!=='fight'||F.dead||F.hu>0)return;const a=F.act;if(a&&!(a.ty==='atk'&&k==='atk'&&a.t>a.dur*.7))return;F.f=O.x>F.x?1:-1;
-  if(k==='atk'){const cb=a?(a.cb+1)%3:(F.cw>0?(F.cb+1)%3:0);F.act={ty:'atk',t:0,dur:cb==2?.42:.28,at:.4,did:0,cb};F.at=0;beep(300,.07,.03);return}
-  const s=SK[F.ci][k],cn=k==='K'?'c1':'c2';
-  if(k==='I'){if(F.mt<100)return;F.mt=0;flash=.35;fcol=F.sk.acc;slow=.2;banner(F.sk.T[2][1])}else{if(F[cn]>0)return;F[cn]=s.cd}
-  F.act=Object.assign({ty:'sk',t:0,did:0},s);F.at=0;beep(190,.2,.05)}
-function fupd(F,O,dt,inp){inp=inp||{l:0,r:0,bk:0,jp:0};F.c1-=dt;F.c2-=dt;F.cw-=dt;F.fl-=dt;F.hu-=dt;F.bound-=dt;const g=F.y>=GY-1&&F.vy>=0;
-  if(F.act){const a=F.act;a.t+=dt;F.at=Math.min(1,a.t/a.dur);F.bl=0;
-    if(a.dv){F.x+=F.f*a.dv*S*dt;ps.push({x:F.x,y:F.y-40*S,vx:0,vy:0,life:.25,col:F.sk.acc});if(!a.hd&&!O.dead&&Math.abs(F.x-O.x)<62*S&&Math.abs(F.y-O.y)<70*S){a.hd=1;hurt(O,F,a.dmg,a.kb,.35,0,0)}}
-    if(!a.did&&a.at!==undefined&&a.t>=a.at*a.dur){a.did=1;a.ty==='atk'?melee(F,O,a.cb):a.fn(F,O)}
-    if(a.t>=a.dur){F.act=null;F.at=-1;if(a.ty==='atk'){F.cw=.5;F.cb=a.cb}}}
-  else if(F.hu>0||F.dead){F.mv=0;F.bl=0}
-  else{F.f=O.x>F.x?1:-1;F.bl=inp.bk&&g?1:0;const v=F.bl?0:(inp.r-inp.l)*F.sk.sp*S;F.x+=v*dt;F.mv=v!==0&&g?1:0;if(F.mv)F.ph+=dt*11;if(inp.jp&&g){F.vy=-820*S;inp.jp=0}}
-  F.x+=F.kx*dt;F.kx-=F.kx*7*dt;F.vy+=2100*S*dt;F.y+=F.vy*dt;if(F.y>=GY){F.y=GY;F.vy=0}F.x=cl(F.x,40*S,W-40*S)}
-function aiTick(F,O,dt){const a=F.ai;a.t-=dt;if(a.t>0||F.act||F.hu>0)return;a.t=Math.max(.1,.36-F.lvl*.08)+Math.random()*.15;a.l=a.r=a.bk=0;
-  const d=Math.abs(O.x-F.x)/S,r=Math.random(),tw=O.x>F.x?'r':'l',aw=O.x>F.x?'l':'r';
-  const inc=PR.some(p=>p.own!==F&&Math.abs(p.x-F.x)<300*S&&Math.sign(p.vx)===Math.sign(F.x-p.x))||(O.act&&d<150);
-  if(inc&&r<.4+F.lvl*.15)a.bk=1;else if(inc&&r<.6)a.jp=1;
-  else if(d>170){a[tw]=1;if(r<.22)tryAct(F,O,'K');else if(r<.3)tryAct(F,O,'L')}
-  else if(d>100){if(r<.45)a[tw]=1;else tryAct(F,O,'atk')}
-  else{if(r<.55)tryAct(F,O,'atk');else if(r<.7)a[aw]=1;else if(r<.8)tryAct(F,O,'L');else a.bk=1}
-  if(F.mt>=100&&d<450&&r<.6)tryAct(F,O,'I')}
-function step(dt){
-  if(st==='intro'){it-=dt;if(it<=.7&&!fb){fb=1;banner('قاتل!')}if(it<=0)st='fight'}
-  if(st==='ko'){kot-=dt;if(kot<=0)afterKo()}
-  const inp={l:+!!(keys.KeyA||keys.ArrowLeft||TB.l),r:+!!(keys.KeyD||keys.ArrowRight||TB.r),bk:+!!(keys.KeyS||keys.ArrowDown||TB.bk),jp:IN.jp};
-  if(st==='fight'){tm-=dt;if(tm<=0){tm=0;banner('انتهى الوقت');ko(F1.hp/F1.mhp>=F2.hp/F2.mhp?F2:F1)}aiTick(F2,F1,dt)}
-  const live=st==='fight';fupd(F1,F2,dt,live?inp:null);fupd(F2,F1,dt,live?F2.ai:null);IN.jp=0;F2.ai.jp=0;
-  if(Math.abs(F1.x-F2.x)<34*S&&F1.y>GY-40*S&&F2.y>GY-40*S){const p=(34*S-Math.abs(F1.x-F2.x))/2*(F1.x<F2.x?-1:1);F1.x+=p;F2.x-=p}
-  for(const e of Q)e.t-=dt;for(const e of Q)if(e.t<=0&&st==='fight')e.fn();Q=Q.filter(e=>e.t>0);
-  for(const p of PR){p.x+=p.vx*dt;p.life-=dt;p.mt-=dt;const O=oth(p.own);if(O.dead)continue;
-    if(Math.abs(p.x-O.x)<p.r+24*S&&Math.abs(p.y-(O.y-55*S))<p.r+55*S){if(p.mh){if(p.mt<=0){p.mt=p.mh;hurt(O,p.own,p.dmg,p.kb,p.stun,0,120)}}else if(!p.hit){p.hit=1;hurt(O,p.own,p.dmg,p.kb,p.stun,0,0);if(!p.pierce)p.rm=1}}
-    if(p.x<-100||p.x>W+100)p.life=0}
-  PR=PR.filter(p=>p.life>0&&!p.rm);
-  for(const z of Z){z.t-=dt;if(z.t<=0&&!z.fired){z.fired=1;z.v=.22;flash=Math.max(flash,.25);fcol='#cfeeff';shake=Math.max(shake,.5);beep(90,.2,.08);const O=oth(z.own);if(Math.abs(O.x-z.x)<44*S&&O.y>GY-70*S)hurt(O,z.own,z.dmg,300,.4,0,260)}if(z.fired)z.v-=dt}
-  Z=Z.filter(z=>!z.fired||z.v>0)}
-const IN={jp:0};
-function startMatch(){wins=[0,0];rnd=1;AR=LAD[li];mkbg(AR);F1=mkF(ME,0,0);F2=mkF(AR,1,li);$('n1').textContent=CH[ME].n;$('n1').style.color=CH[ME].acc;$('n2').textContent=CH[AR].n;$('n2').style.color=CH[AR].acc;startRound()}
-function startRound(){$('ov').classList.add('hide');for(const[F,s]of[[F1,0],[F2,1]]){F.x=W*(s?.7:.3);F.y=GY;F.vy=0;F.hp=F.mhp;F.f=s?-1:1;F.act=null;F.at=-1;F.hu=0;F.kx=0;F.dead=0;F.bound=0;F.c1=F.c2=F.cw=0}
-  PR=[];Z=[];Q=[];tm=60;st='intro';it=1.7;fb=0;banner('الجولة '+ar(rnd))}
-function afterKo(){if(wins[0]>=2||wins[1]>=2)endMatch();else{rnd++;startRound()}}
-function ov(h){const o=$('ov');o.innerHTML=h;o.classList.remove('hide')}
-function endMatch(){st='over';if(wins[0]>=2){if(li<LAD.length-1){const n=CH[LAD[li+1]];ov('<h1>فزت!</h1><p>الخصم التالي: '+n.n+' ('+n.el+')</p><button class="gb" onclick="li++;startMatch()">القتال التالي</button>')}
-  else ov('<h1>بطل الساحة</h1><p>هزمت المقاتلين الثلاثة بكل تقنياتهم.</p><button class="gb" onclick="showSel()">العب مجددًا</button>')}
-  else ov('<h1>هُزمت</h1><p>سقطت أمام '+CH[AR].n+'.</p><button class="gb" onclick="startMatch()">حاول مجددًا</button><button class="gb" onclick="showSel()">مقاتل آخر</button>')}
-function showMenu(){st='menu';ov('<h1>ساحة الظل</h1><p>قتال نينجا واحد ضد واحد. اختر مقاتلك، واهزم الثلاثة الآخرين في ساحاتهم، لكل واحد منهم تقنياته الخاصة.</p><p class="d">يُفضَّل اللعب بالوضع الأفقي<br>لوحة المفاتيح: A D حركة · W قفز · S درع · J ضربة · K ١ · L ٢ · I ★</p><button class="gb" onclick="showSel()">ابدأ</button>')}
-function showSel(){st='menu';let h='<h2>اختر مقاتلك</h2><div class="gr">';CH.forEach((d,i)=>{h+='<div class="cd" style="--c:'+d.acc+'" onclick="pick('+i+')"><h3>'+d.n+'</h3><small>'+d.el+'</small><ul><li>اضرب · كومبو ثلاثي</li>'+d.T.map(a=>'<li>'+a[0]+' · '+a[1]+'</li>').join('')+'</ul></div>'});ov(h+'</div>')}
-function pick(i){ME=i;LAD=[0,1,2,3].filter(j=>j!==i);li=0;startMatch()}
-function fig(o,al){const d=CH[o.ci],s=S;let col=d.col,acc=d.acc;if(o.fl>0)col=acc='#fff';
-  x.save();x.translate(o.x,o.y);x.globalAlpha=al||1;x.fillStyle='rgba(0,0,0,.5)';x.beginPath();x.ellipse(0,GY-o.y,26*s,7*s,0,0,6.3);x.fill();
-  if(o.dead)x.rotate(-o.f*1.45);x.scale(o.f,1);
-  const air=o.y<GY-6*s,w=o.mv?Math.sin(o.ph):0,bob=o.mv?Math.abs(Math.cos(o.ph))*3*s:Math.sin(t*3+o.x)*1.2*s,hy=-38*s-bob;let ln=o.at>=0?9*s:0;if(o.hu>0&&!o.bound)ln=-9*s;
-  x.lineCap=x.lineJoin='round';x.strokeStyle=col;x.lineWidth=9*s;
-  for(const k of[-1,1]){x.beginPath();x.moveTo(0,hy);x.lineTo(air?k*16*s:k*w*15*s+(o.at>=0?k*9*s:0),air?-8*s:-2*s);x.stroke()}
-  x.lineWidth=15*s;x.beginPath();x.moveTo(0,hy);x.lineTo(ln*.6,hy-27*s);x.stroke();
-  x.strokeStyle=acc;x.lineWidth=5*s;x.beginPath();x.moveTo(-6*s,hy-8*s);x.lineTo(8*s+ln*.5,hy-12*s);x.stroke();
-  const hx=ln+2*s,hyy=hy-40*s;x.fillStyle=acc;x.strokeStyle=acc;
-  if(o.ci==0)for(let i=-1;i<2;i++){x.beginPath();x.moveTo(hx-8*s+i*8*s,hyy-6*s);x.lineTo(hx-14*s+i*9*s,hyy-27*s+Math.abs(i)*7*s);x.lineTo(hx+i*8*s+2*s,hyy-8*s);x.fill()}
-  if(o.ci==1){x.beginPath();x.moveTo(hx-10*s,hyy-2*s);x.lineTo(hx-30*s,hyy-14*s);x.lineTo(hx-6*s,hyy-12*s);x.lineTo(hx+8*s,hyy-26*s);x.lineTo(hx+10*s,hyy-6*s);x.fill()}
-  if(o.ci==2){x.lineWidth=7*s;x.beginPath();x.moveTo(hx-8*s,hyy-4*s);x.quadraticCurveTo(hx-30*s,hyy+10*s+Math.sin(t*4)*3*s,hx-30*s,hyy+34*s);x.stroke()}
-  if(o.ci==3){x.beginPath();x.arc(hx-2*s,hyy-15*s,8*s,0,6.3);x.fill()}
-  x.fillStyle=o.fl>0?'#fff':'#d9a98a';x.beginPath();x.arc(hx,hyy,10*s,0,6.3);x.fill();
-  x.fillStyle=col;x.beginPath();x.arc(hx,hyy-2*s,10.5*s,3.4,6.1);x.fill();if(o.ci>=2)x.fillRect(hx-10*s,hyy+1*s,20*s,8*s);
-  x.fillStyle=acc;x.fillRect(hx-10*s,hyy-6*s,20*s,5*s);x.fillStyle=o.ci==1?'#8fe8ff':'#fff';x.fillRect(hx+3*s,hyy-1*s,5*s,2.5*s);
-  x.strokeStyle=acc;x.lineWidth=(o.ci==3?6:4.5)*s;x.beginPath();x.moveTo(hx-9*s,hyy-4*s);x.quadraticCurveTo(hx-24*s,hyy-6*s+Math.sin(t*9+o.x)*6*s,hx-(o.ci==3?52:40)*s,hyy+4*s+Math.cos(t*7+o.x)*7*s);x.stroke();
-  const sx=ln*.8,sy=hy-27*s;x.strokeStyle=col;x.lineWidth=7*s;x.beginPath();x.moveTo(sx,sy);x.lineTo(sx-10*s-w*8*s,sy+18*s);x.stroke();
-  const a=o.bl?-.35:o.at>=0?-1.4+o.at*2.7:.9,hxx=sx+Math.cos(a)*24*s,hy2=sy+Math.sin(a)*24*s;x.beginPath();x.moveTo(sx,sy);x.lineTo(hxx,hy2);x.stroke();
-  const ba=o.at>=0?a-.35:o.bl?-1.5:1.2;x.strokeStyle='#e8f4ff';x.lineWidth=3.5*s;x.beginPath();x.moveTo(hxx,hy2);x.lineTo(hxx+Math.cos(ba)*36*s,hy2+Math.sin(ba)*36*s);x.stroke();
-  if(o.bl){x.strokeStyle=acc;x.globalAlpha=.55;x.lineWidth=5*s;x.beginPath();x.arc(10*s,hy-26*s,40*s,-1.2,1.2);x.stroke()}
-  x.restore();
-  if(o.bound>0){x.strokeStyle='#b66bff';x.lineWidth=4;for(let i=0;i<3;i++){x.beginPath();x.ellipse(o.x,o.y-30*s-i*22*s,24*s,7*s,0,0,6.3);x.stroke()}}}
-function draw(){x.save();if(shake>0)x.translate((Math.random()-.5)*16*shake,(Math.random()-.5)*16*shake);
-  x.drawImage(bg,0,0,W,H);const v=CH[AR].v;x.fillStyle=CH[AR].am;x.strokeStyle=CH[AR].am;
-  for(const a of amb){const px=((a.x*W+v[0]*t*a.s)%W+W)%W,py=((a.y*H+v[1]*t*a.s)%H+H)%H;if(AR==1){x.globalAlpha=.4;x.beginPath();x.moveTo(px,py);x.lineTo(px+v[0]*.03,py+18);x.stroke()}else{x.globalAlpha=.7;x.fillRect(px,py,3*S*a.s+1,3*S*a.s+1)}}x.globalAlpha=1;
-  for(const z of Z){if(!z.fired){const p=1-z.t/z.m;x.strokeStyle='rgba(143,232,255,'+(.2+.6*p)+')';x.lineWidth=3;x.beginPath();x.ellipse(z.x,GY,44*S*(1.1-p*.3),10*S,0,0,6.3);x.stroke()}else{x.fillStyle='rgba(220,245,255,'+z.v*4+')';x.fillRect(z.x-12*S,0,24*S,GY);x.fillStyle='rgba(143,232,255,'+z.v*2+')';x.fillRect(z.x-38*S,0,76*S,GY)}}
-  if(F1){for(const F of[F1,F2].sort((a,b)=>a.dead-b.dead))fig(F);
-    for(const F of[F1,F2])if(F.act&&F.act.ty==='atk'&&F.at>.3&&F.at<.95){const p=F.at;x.save();x.translate(F.x,F.y-55*S);x.scale(F.f,1);x.lineCap='round';x.strokeStyle='rgba(220,248,255,'+(1-p*.6)+')';x.lineWidth=(F.act.cb==2?20:12)*(1-p*.5)*S;x.beginPath();x.arc(0,0,(F.act.cb==2?80:66)*S,-1.5,-1.5+2.9*p);x.stroke();x.restore()}}
-  for(const p of PR){const a=p.own.sk.acc;
-    if(p.ty==='clone'){fig({ci:p.own.ci,x:p.x,y:p.y+55*S,f:Math.sign(p.vx),ph:t*22,mv:1,at:-1,hu:0,bl:0,fl:0},.55);continue}
-    if(p.ty==='fire'){const g=x.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*1.6);g.addColorStop(0,'#fff6c8');g.addColorStop(.4,'#ff9a1f');g.addColorStop(1,'rgba(255,60,20,0)');x.fillStyle=g;x.beginPath();x.arc(p.x,p.y,p.r*1.6,0,6.3);x.fill();if(Math.random()<.8)ps.push({x:p.x,y:p.y,vx:-p.vx*.2,vy:(Math.random()-.5)*60,life:.3,col:'#ff7a2a'})}
-    if(p.ty==='blade'){x.strokeStyle='#e0ffe8';x.lineWidth=5*S;x.lineCap='round';x.beginPath();x.arc(p.x-Math.sign(p.vx)*14*S,p.y,26*S,Math.sign(p.vx)>0?-1:2.14,Math.sign(p.vx)>0?1:4.14);x.stroke()}
-    if(p.ty==='tor'){for(let i=0;i<7;i++){const k=i/6;x.strokeStyle='rgba(180,255,210,'+(.8-k*.4)+')';x.lineWidth=4*S;x.beginPath();x.ellipse(p.x+Math.sin(t*14+i)*10*S,p.y+p.r-k*p.r*2,p.r*(.3+k*.7),p.r*.18,0,0,6.3);x.stroke()}}}
-  for(const p of ps){if(p.ring){const k=1-p.life/.4;x.strokeStyle='rgba(224,255,232,'+(1-k)+')';x.lineWidth=8*(1-k);x.beginPath();x.ellipse(p.x,p.y,170*S*k,100*S*k,0,0,6.3);x.stroke();continue}x.globalAlpha=Math.max(0,p.life*2.5);x.fillStyle=p.col;x.fillRect(p.x-2,p.y-2,4,4)}x.globalAlpha=1;
-  const vg=x.createRadialGradient(W/2,H/2,H*.4,W/2,H/2,Math.max(W,H)*.75);vg.addColorStop(0,'rgba(0,0,0,0)');vg.addColorStop(1,'rgba(0,0,0,.5)');x.fillStyle=vg;x.fillRect(-20,-20,W+40,H+40);
-  x.restore();if(flash>0){x.globalAlpha=Math.min(.6,flash);x.fillStyle=fcol;x.fillRect(0,0,W,H);x.globalAlpha=1}}
-function hud(){if(!F1)return;$('h1').style.transform='scaleX('+F1.hp/F1.mhp+')';$('h2').style.transform='scaleX('+F2.hp/F2.mhp+')';$('m1').style.transform='scaleX('+F1.mt/100+')';$('m2').style.transform='scaleX('+F2.mt/100+')';
-  $('tm').textContent=ar(Math.ceil(tm));for(const i of[1,2])$('d'+i).innerHTML=[0,1].map(k=>'<span class="dt'+(wins[i-1]>k?' on':'')+'"></span>').join('');
-  $('at').style.opacity=F1.act?.6:1;$('s1').style.opacity=F1.c1>0?.35:1;$('s2').style.opacity=F1.c2>0?.35:1;$('ul').style.opacity=F1.mt>=100?1:.35;$('ul').style.boxShadow=F1.mt>=100?'0 0 18px #ffd54a':'none'}
-let last=performance.now();
-function loop(n){let dt=Math.min(.04,(n-last)/1000);last=n;if(slow>0){slow-=dt;dt*=.35}t+=dt;shake=Math.max(0,shake-dt*2.2);flash=Math.max(0,flash-dt*2.2);
-  if(AR==1&&Math.random()<.004){flash=.3;fcol='#cfeeff'}
-  if(F1){if(hs>0)hs-=dt;else step(dt)}
-  for(const p of ps){if(p.ring){p.life-=dt;continue}p.x+=p.vx*dt;p.y+=p.vy*dt;p.life-=dt}ps=ps.filter(p=>p.life>0);
-  draw();hud();requestAnimationFrame(loop)}
-function hold(id,k){const e=$(id);e.addEventListener('pointerdown',ev=>{ev.preventDefault();TB[k]=1});['pointerup','pointerleave','pointercancel'].forEach(n=>e.addEventListener(n,()=>TB[k]=0))}
-hold('lf','l');hold('rt','r');hold('bk','bk');
-$('jp').addEventListener('pointerdown',e=>{e.preventDefault();IN.jp=1});
-[['at','atk'],['s1','K'],['s2','L'],['ul','I']].forEach(([i,k])=>$(i).addEventListener('pointerdown',e=>{e.preventDefault();tryAct(F1,F2,k)}));
-addEventListener('keydown',e=>{if(e.repeat)return;keys[e.code]=true;if(['Space','ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.code))e.preventDefault();
-  if(e.code==='KeyW'||e.code==='ArrowUp')IN.jp=1;if(e.code==='KeyJ')tryAct(F1,F2,'atk');if(e.code==='KeyK')tryAct(F1,F2,'K');if(e.code==='KeyL')tryAct(F1,F2,'L');if(e.code==='KeyI')tryAct(F1,F2,'I')});
-addEventListener('keyup',e=>keys[e.code]=false);
-rs();F1=mkF(0,0,0);F2=mkF(1,1,0);$('n1').textContent='';showMenu();requestAnimationFrame(loop);
-</script>
-</body>
-</html>
+
+    <div id="game-container">
+        <!-- HUD Header -->
+        <div class="hud">
+            <div class="health-bar-container">
+                <div class="character-name"><span>المقاتل الاسطوري</span><span id="player-hp-text">100</span></div>
+                <div class="bar-bg"><div id="player-hp" class="hp-fill"></div></div>
+                <div class="bar-bg" style="height: 6px; margin-top: 4px;">
+                    <div id="player-energy" class="energy-fill"></div>
+                </div>
+            </div>
+            
+            <div class="stage-badge" id="stage-text">المرحلة 1</div>
+
+            <div class="health-bar-container">
+                <div class="character-name"><span id="enemy-hp-text">100</span><span>الخصم</span></div>
+                <div class="bar-bg"><div id="enemy-hp" class="hp-fill"></div></div>
+            </div>
+        </div>
+
+        <!-- Battlefield Area -->
+        <div id="arena">
+            <div id="player" class="character">
+                <div class="char-body player-visual">⚡
+                    <div id="player-shield" class="shield-aura"></div>
+                </div>
+            </div>
+            <div id="enemy" class="character">
+                <div class="char-body enemy-visual">🔥</div>
+            </div>
+        </div>
+
+        <!-- Skill Cards / Controls -->
+        <div class="controls-deck">
+            <div class="tech-card" onclick="castTechnique(0)">
+                <div class="tech-icon">🔥</div>
+                <div class="tech-name">شعاع النار</div>
+                <div class="tech-cost">طاقة: 20</div>
+            </div>
+            <div class="tech-card" onclick="castTechnique(1)">
+                <div class="tech-icon">⚡</div>
+                <div class="tech-name">البرق السريع</div>
+                <div class="tech-cost">طاقة: 35</div>
+            </div>
+            <div class="tech-card" onclick="castTechnique(2)">
+                <div class="tech-icon">🛡️</div>
+                <div class="tech-name">درع الكي</div>
+                <div class="tech-cost">طاقة: 30</div>
+            </div>
+            <div class="tech-card" onclick="castTechnique(3)">
+                <div class="tech-icon">💥</div>
+                <div class="tech-name">التقنية الخارقة</div>
+                <div class="tech-cost">طاقة: 80</div>
+            </div>
+        </div>
+
+        <!-- Start Screen -->
+        <div id="start-screen" class="screen">
+            <h1 style="font-size: 36px; color: #00d2ff; text-shadow: 0 0 15px #00d2ff; margin-bottom: 8px;">ساحة التقنيات</h1>
+            <p style="color: #aaa; font-size: 18px; margin-bottom: 25px;">صراع الأسطورة</p>
+            <button class="btn" onclick="startGame()">ابدأ المعركة</button>
+        </div>
+
+        <!-- Game Over / Victory Screen -->
+        <div id="end-screen" class="screen" style="display: none;">
+            <h2 id="end-title" style="font-size: 34px; margin-bottom: 12px; text-shadow: 0 0 10px currentColor;">انتصار!</h2>
+            <p id="end-sub" style="color: #ccc; font-size: 16px;">لقد هزمت الخصم بنجاح</p>
+            <button class="btn" id="end-btn" onclick="nextStage()">المرحلة التالية</button>
+        </div>
+
+        <!-- Beam Struggle / Clash Overlay -->
+        <div id="clash-overlay" class="clash-overlay">
+            <h2 style="color: #ffcc00; text-shadow: 0 0 15px #ffcc00; font-size: 26px;">تصادم التقنيات!</h2>
+            <p style="color: #ddd; margin-top: 5px;">اضغط بسرعة لتغلب هجوم الخصم!</p>
+            <div class="clash-meter-bg">
+                <div id="clash-meter" class="clash-meter-fill"></div>
+            </div>
+            <div class="tap-btn" onclick="tapClash()">اضغط!</div>
+        </div>
+    </div>
+
+    <script>
+        // Game Logic Setup
+        let player = { hp: 100, maxHp: 100, energy: 0, shield: false };
+        let enemy = { hp: 100, maxHp: 100, energy: 0 };
+        let stage = 1;
+        let gameActive = false;
+        let projectiles = [];
+        let isClashing = false;
+        let clashProgress = 50;
+
+        const techniques = [
+            { name: 'شعاع النار', cost: 20, speed: 7, power: 18, color: '#ff4500', size: 22, icon: '🔥' },
+            { name: 'البرق السريع', cost: 35, speed: 13, power: 28, color: '#00ffff', size: 16, icon: '⚡' },
+            { name: 'درع الكي', cost: 30, isShield: true },
+            { name: 'التقنية الخارقة', cost: 80, speed: 4.5, power: 60, color: '#ff00ff', size: 38, icon: '💥' }
+        ];
+
+        function startGame() {
+            document.getElementById('start-screen').style.display = 'none';
+            document.getElementById('end-screen').style.display = 'none';
+            resetBattle();
+            gameActive = true;
+            requestAnimationFrame(gameLoop);
+        }
+
+        function resetBattle() {
+            player.hp = player.maxHp;
+            player.energy = 0;
+            player.shield = false;
+            document.getElementById('player-shield').style.display = 'none';
+
+            enemy.maxHp = 90 + (stage * 20);
+            enemy.hp = enemy.maxHp;
+            enemy.energy = 0;
+            
+            // Remove old projectiles
+            projectiles.forEach(p => p.element.remove());
+            projectiles = [];
+            
+            updateHUD();
+        }
+
+        function updateHUD() {
+            document.getElementById('player-hp').style.width = Math.max(0, (player.hp / player.maxHp * 100)) + '%';
+            document.getElementById('player-hp-text').innerText = Math.ceil(Math.max(0, player.hp));
+            document.getElementById('player-energy').style.width = player.energy + '%';
+
+            document.getElementById('enemy-hp').style.width = Math.max(0, (enemy.hp / enemy.maxHp * 100)) + '%';
+            document.getElementById('enemy-hp-text').innerText = Math.ceil(Math.max(0, enemy.hp));
+            document.getElementById('stage-text').innerText = 'المرحلة ' + stage;
+
+            // Card state updates
+            const cards = document.querySelectorAll('.tech-card');
+            cards.forEach((card, idx) => {
+                if (player.energy >= techniques[idx].cost) {
+                    card.classList.remove('disabled');
+                    card.classList.add('active');
+                } else {
+                    card.classList.add('disabled');
+                    card.classList.remove('active');
+                }
+            });
+        }
+
+        function castTechnique(idx) {
+            if (!gameActive || isClashing) return;
+            const tech = techniques[idx];
+            
+            if (player.energy >= tech.cost) {
+                player.energy -= tech.cost;
+                
+                if (tech.isShield) {
+                    player.shield = true;
+                    document.getElementById('player-shield').style.display = 'block';
+                    setTimeout(() => {
+                        player.shield = false;
+                        document.getElementById('player-shield').style.display = 'none';
+                    }, 3500);
+                } else {
+                    spawnProjectile(tech, true);
+                }
+                updateHUD();
+            }
+        }
+
+        function enemyAI() {
+            if (!gameActive || isClashing) return;
+            enemy.energy += 0.25 + (stage * 0.05);
+            
+            if (enemy.energy >= 30 && Math.random() < 0.025) {
+                enemy.energy -= 30;
+                let enemyTech = { 
+                    name: 'هجوم الخصم', 
+                    speed: 6 + (stage * 0.5), 
+                    power: 12 + (stage * 4), 
+                    color: '#ff0055', 
+                    size: 24, 
+                    icon: '🔥' 
+                };
+                spawnProjectile(enemyTech, false);
+            }
+        }
+
+        function spawnProjectile(tech, isPlayer) {
+            const arena = document.getElementById('arena');
+            const elem = document.createElement('div');
+            elem.className = 'projectile';
+            elem.style.width = tech.size + 'px';
+            elem.style.height = tech.size + 'px';
+            elem.style.backgroundColor = tech.color;
+            elem.style.boxShadow = `0 0 15px ${tech.color}`;
+            elem.innerText = tech.icon || '';
+
+            let startX = isPlayer ? 110 : arena.clientWidth - 110;
+            elem.style.left = startX + 'px';
+
+            arena.appendChild(elem);
+
+            projectiles.push({
+                element: elem,
+                x: startX,
+                speed: isPlayer ? tech.speed : -tech.speed,
+                power: tech.power,
+                isPlayer: isPlayer
+            });
+        }
+
+        function gameLoop() {
+            if (!gameActive) return;
+
+            if (player.energy < 100) player.energy += 0.25;
+            enemyAI();
+            updateHUD();
+
+            const arenaWidth = document.getElementById('arena').clientWidth;
+            
+            for (let i = projectiles.length - 1; i >= 0; i--) {
+                let p = projectiles[i];
+                p.x += p.speed;
+                p.element.style.left = p.x + 'px';
+
+                // Hit enemy
+                if (p.isPlayer && p.x >= arenaWidth - 90) {
+                    enemy.hp -= p.power;
+                    destroyProjectile(i);
+                    checkBattleStatus();
+                } 
+                // Hit player
+                else if (!p.isPlayer && p.x <= 90) {
+                    if (!player.shield) {
+                        player.hp -= p.power;
+                    }
+                    destroyProjectile(i);
+                    checkBattleStatus();
+                }
+
+                // Check clash between opposite projectiles
+                for (let j = i - 1; j >= 0; j--) {
+                    let p2 = projectiles[j];
+                    if (p.isPlayer !== p2.isPlayer && Math.abs(p.x - p2.x) < 25) {
+                        triggerClash(i, j);
+                        break;
+                    }
+                }
+            }
+
+            requestAnimationFrame(gameLoop);
+        }
+
+        function destroyProjectile(index) {
+            if (projectiles[index]) {
+                projectiles[index].element.remove();
+                projectiles.splice(index, 1);
+            }
+        }
+
+        function triggerClash(idx1, idx2) {
+            isClashing = true;
+            destroyProjectile(idx1);
+            destroyProjectile(idx2);
+            
+            clashProgress = 50;
+            document.getElementById('clash-meter').style.width = clashProgress
